@@ -74,3 +74,5 @@ OSM
      ├── splitter/splitter.jar
      └── srtm2osm/Srtm2Osm.exe
 ```
+---
+*Стили взяты у [MaksVasilev](https://github.com/MaksVasilev/stranger-garmin) и [MapTourist](https://maptourist.org/)*
