@@ -1,0 +1,195 @@
+
+
+[_id]
+ProductCode=1
+FID=481
+CodePage=1251
+[End]
+
+;=========== COMMENTAIRES ======
+[_comments]
+[End]
+
+
+
+
+;=========== POLYGONES : PRIORITE DANS L'AFFICHAGE ======
+[_drawOrder]
+Type=0x043,1
+Type=0x04b,1
+Type=0x052,2
+Type=0x053,2
+Type=0x054,2
+Type=0x001,3
+Type=0x002,3
+Type=0x003,3
+Type=0x007,4
+Type=0x00c,4
+Type=0x00f,4
+Type=0x010,4
+Type=0x04e,4
+Type=0x055,4
+Type=0x10909,4
+Type=0x032,5
+Type=0x021,6
+Type=0x10612,6
+Type=0x10f0b,6
+Type=0x008,7
+Type=0x00a,7
+Type=0x00b,7
+Type=0x10f10,7
+Type=0x10f0c,8
+Type=0x10f19,8
+Type=0x017,9
+Type=0x019,10
+Type=0x015,11
+Type=0x018,11
+Type=0x01b,11
+Type=0x04f,11
+Type=0x050,11
+Type=0x10100,11
+Type=0x10101,11
+Type=0x10c02,11
+Type=0x10c06,11
+Type=0x10f00,11
+Type=0x10f14,11
+Type=0x10f15,11
+Type=0x10f17,11
+Type=0x01a,12
+Type=0x03c,13
+Type=0x03e,13
+Type=0x03f,13
+Type=0x046,13
+Type=0x04d,13
+Type=0x10f18,13
+Type=0x040,14
+Type=0x051,14
+Type=0x10102,14
+Type=0x10f01,14
+Type=0x10f12,14
+Type=0x10f13,14
+Type=0x10f16,14
+Type=0x10f11,15
+Type=0x005,16
+Type=0x006,16
+Type=0x004,17
+Type=0x00d,17
+Type=0x016,17
+Type=0x013,18
+[End]
+
+
+
+
+
+
+;====================== LINES ===========================
+
+
+[_line]
+Type=0x20
+;GRMN_TYPE: Contour Lines/MINOR_CONTOUR/Minor land-based contour line/Non NT
+UseOrientation=Y
+Xpm="32 1 4  1"
+"! c #FF9500"
+"  c none"
+"3 c #FFCA8B"
+"4 c none"
+"!!!!    !!!!    !!!!    !!!!    "
+;12345678901234567890123456789012
+String1=0x19,вспомогательная горизонталь
+String2=0x04,minor elevation
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=DayAndNight
+DaycustomColor:#FF9500
+NightcustomColor:#FFCA8B
+[end]
+
+
+[_line]
+Type=0x21
+;GRMN_TYPE: Contour Lines/INT_CONTOUR/Intermediate contour (should be used for about every 5th contour line)/Non NT
+UseOrientation=Y
+LineWidth=1
+Xpm="0 0 2 0"
+"1 c #FF9500"
+"2 c #FFCA8B"
+String1=0x19,основная горизонталь
+String2=0x04,medium elevation
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=DayAndNight
+DaycustomColor:#FF9500
+NightcustomColor:#FFCA8B
+[end]
+
+
+[_line]
+Type=0x22
+;GRMN_TYPE: Contour Lines/MAJOR_CONTOUR/Major contour (should be used for about every 10th contour line)/Non NT
+UseOrientation=Y
+LineWidth=2
+Xpm="0 0 2 0"
+"1 c #FF9500"
+"2 c #FFCA8B"
+String1=0x19,утолщённая горизонталь
+String2=0x04,major elevation
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=DayAndNight
+DaycustomColor:#FF9500
+NightcustomColor:#FFCA8B
+[end]
+
+
+[_line]
+Type=0x23
+;GRMN_TYPE: Contour Lines/MINOR_BATHY_CONTOUR/Minor bathymetric, or depth, contour/Non NT
+UseOrientation=Y
+Xpm="32 1 2  1"
+"! c #00CAFF"
+"# c #00006A"
+"!!!!####!!!!####!!!!####!!!!####"
+;12345678901234567890123456789012
+String1=0x19,изобата
+String2=0x04,elevation contour
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=No
+[end]
+
+
+[_line]
+Type=0x24
+;GRMN_TYPE: Contour Lines/INT_BATHY_CONTOUR/Intermediate bathymetric, or depth, contour (should be used for about every 5th contour line)/Non NT
+UseOrientation=Y
+LineWidth=1
+BorderWidth=0
+Xpm="0 0 2 0"
+"1 c #00006A"
+"2 c #00006A"
+String1=0x19,изобата
+String2=0x04,elevation contour
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=No
+[end]
+
+
+[_line]
+Type=0x25
+;GRMN_TYPE: Contour Lines/MAJOR_BATHY_CONTOUR/Major bathymetric, or depth, contour (should be used for about every 10th contour line)/Non NT
+UseOrientation=Y
+LineWidth=2
+BorderWidth=0
+Xpm="0 0 2 0"
+"1 c #00006A"
+"2 c #00006A"
+String1=0x19,изобата
+String2=0x04,elevation contour
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=No
+[end]
+

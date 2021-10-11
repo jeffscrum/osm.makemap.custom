@@ -1,0 +1,195 @@
+# убираем кавычки из всех названий
+name~'.*("+).*' {set name='${name|subst:["+]~>}'}
+name~'.*(\u00ab+).*' {set name='${name|subst:[\u00ab+]~>}'}
+name~'.*(\u00bb+).*' {set name='${name|subst:[\u00bb+]~>}'}
+description~'.*("+).*' {set description='${description|subst:["+]~>}'}
+description~'.*(\u00ab+).*' {set description='${description|subst:[\u00ab+]~>}'}
+description~'.*(\u00bb+).*' {set description='${description|subst:[\u00bb+]~>}'}
+operator~'.*("+).*' {set operator='${operator|subst:["+]~>}'}
+operator~'.*(\u00ab+).*' {set operator='${operator|subst:[\u00ab+]~>}'}
+operator~'.*(\u00bb+).*' {set operator='${operator|subst:[\u00bb+]~>}'}
+brand~'.*("+).*' {set brand='${brand|subst:["+]~>}'}
+brand~'.*(\u00ab+).*' {set brand='${brand|subst:[\u00ab+]~>}'}
+brand~'.*(\u00bb+).*' {set brand='${brand|subst:[\u00bb+]~>}'}
+mkgmap:addr:street~'.*("+).*' {set addr:street='${addr:street|subst:["+]~>}'}
+mkgmap:addr:street~'.*(\u00ab+).*' {set addr:street='${addr:street|subst:[\u00ab+]~>}'}
+mkgmap:addr:street~'.*(\u00bb+).*' {set addr:street='${addr:street|subst:[\u00bb+]~>}'}
+addr:place~'.*("+).*' {set addr:place='${addr:place|subst:["+]~>}'}
+addr:place~'.*(\u00ab+).*' {set addr:place='${addr:place|subst:[\u00ab+]~>}'}
+addr:place~'.*(\u00bb+).*' {set addr:place='${addr:place|subst:[\u00bb+]~>}'}
+
+# Rules for naming objects, based on the following tags:
+# name, brand, operator, ref
+
+# delete FIXME values (they should be better used in maintenance maps)
+# better use option --ignore-fixme-values
+ref ~ '(?i)fix[ _]?+me'		{ delete ref; } 
+operator ~ '(?i)fix[ _]?+me'	{ delete operator; }
+brand ~ '(?i)fix[ _]?+me'		{ delete brand; }
+name ~ '(?i)fix[ _]?+me'		{ delete name; }
+
+# Delete fake Names & Descriptions
+name="urban land" {delete name}
+name="other land" {delete name}
+name="grazing land" {delete name}
+name="rural residential" {delete name}
+name="farmland of local importance" {delete name}
+description="urban land" {delete description}
+description="other land" {delete description}
+description="grazing land" {delete description}
+description="rural residential" {delete description}
+description="farmland of local importance" {delete description}
+
+# Description to Name
+# (дублируется в файле lines)
+(place=* & description=*) | (landuse=* & description=*) { delete description } 
+(name=* & description=*)|(name=* & description!=*)|(name!=* & description=*) 
+	{ set name='${name} (${description})'|'${name}'|'${description}' }
+
+# delete duplicate names
+operator=${brand} { delete operator; }
+operator=${name}  { delete operator; }
+brand=${name}     { delete brand; }
+
+# None of operator, brand given
+ref=* & (operator!=* & brand!=*) & (highway=bus_stop | railway=tram_stop | railway=halt | railway=station) { name '${name} ${ref}' | '${ref}' }
+ref=* & (operator!=* & brand!=*) { set name='${name}: ${ref}' | '${ref}' }
+
+# Both operator and brand given
+operator=* & brand=* {
+ set name='${name}: ${brand} ${ref} (${operator})' |
+      '${brand}: ${ref} (${operator})' |
+      '${name}: ${brand} (${operator})' |
+      '${brand} (${operator})'
+}
+
+# One of operator or brand given
+operator=* & brand!=* & (highway=bus_stop | railway=tram_stop | railway=halt | railway=station) {
+ set name='${name}: ${ref} (${operator})' |
+      '${name} (${operator})' |
+      '${ref} (${operator})' |
+      '${operator}'
+}
+
+operator=* & brand!=* {
+ set name='${name} (${operator}) ${ref}' |
+      '${name} (${operator})' |
+      '${operator}: ${ref}' |
+      '${operator}' |
+      '${ref}'
+}
+
+brand=* & operator!=* {
+ set name='${name}: ${brand} ${ref}' |
+      '${name}: ${brand}' | 
+      '${brand}: ${ref}' |
+      '${brand}' |
+      '${ref}'
+}
+
+
+### налаживаем поиск для СНТ, КП и др.
+# переносим статус в конец и добавляем круглые скобки
+(place=allotments | landuse=*) & name ~ '.*([Сс][Нн][Тт] ).*' 
+	{set name='${name|subst:([Сс][Нн][Тт])~>} (СНТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Дд][Нн][Тт] ).*' 
+	{set name='${name|subst:([Дд][Нн][Тт])~>} (ДНТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Дд][Нн][Пп] ).*' 
+	{set name='${name|subst:([Дд][Нн][Пп])~>} (ДНП)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс]адовое [Тт]оварищество).*' 
+	{set name='${name|subst:([Сс]адовое [Тт]оварищество)~>} (СТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс]адоводческое [Тт]оварищество).*' 
+	{set name='${name|subst:([Сс]адоводческое [Тт]оварищество)~>} (СТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс]адовое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set name='${name|subst:([Сс]адовое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set name='${name|subst:([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс]/[Тт]).*' 
+	{set name='${name|subst:([Сс]/[Тт])~>} (СТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Кк]оттеджный [Пп]оселок).*' 
+	{set name='${name|subst:([Кк]оттеджный [Пп]оселок)~>} (КП)'}
+(place=allotments | landuse=*) & name ~ '.*([Кк]оттеджный [Пп]осёлок).*' 
+	{set name='${name|subst:([Кк]оттеджный [Пп]осёлок)~>} (КП)'}
+(place=allotments | landuse=*) & name ~ '.*([Кк][Пп] ).*' 
+	{set name='${name|subst:([Кк][Пп] )~>} (КП)'}
+(place=allotments | landuse=*) & name ~ '.*([Сс][Дд][Тт] ).*' 
+	{set name='${name|subst:([Сс][Дд][Тт])~>} (СДТ)'}
+(place=allotments | landuse=*) & name ~ '.*([Дд][Сс][Кк] ).*' 
+	{set name='${name|subst:([Дд][Сс][Кк] )~>} (ДСК)'}
+(place=allotments | landuse=*) & name ~ '(^[Сс][Тт] ).*' 
+	{set name='${name|subst:(^[Сс][Тт] )~>} (СТ)'}
+(place=allotments | landuse=*) & name ~ '(^[Дд][Пп] ).*' 
+	{set name='${name|subst:(^[Дд][Пп] )~>} (ДП)'}
+(place=allotments | landuse=*) & name ~ '.*(^[Сс][Оо][Тт] ).*' 
+	{set name='${name|subst:([Сс][Оо][Тт] )~>} (СОТ)'}
+
+addr:street ~ '.*([Сс][Нн][Тт] ).*' 
+	{set addr:street='${addr:street|subst:([Сс][Нн][Тт])~>} (СНТ)'}
+addr:street ~ '.*([Дд][Нн][Тт] ).*' 
+	{set addr:street='${addr:street|subst:([Дд][Нн][Тт])~>} (ДНТ)'}
+addr:street ~ '.*([Дд][Нн][Пп] ).*' 
+	{set addr:street='${addr:street|subst:([Дд][Нн][Пп])~>} (ДНП)'}
+addr:street ~ '.*([Сс]адовое [Тт]оварищество).*' 
+	{set addr:street='${addr:street|subst:([Сс]адовое [Тт]оварищество)~>} (СТ)'}
+addr:street ~ '.*([Сс]адоводческое [Тт]оварищество).*' 
+	{set addr:street='${addr:street|subst:([Сс]адоводческое [Тт]оварищество)~>} (СТ)'}
+addr:street ~ '.*([Сс]адовое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set addr:street='${addr:street|subst:([Сс]адовое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+addr:street ~ '.*([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set addr:street='${addr:street|subst:([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+addr:street ~ '.*([Сс]/[Тт]).*' 
+	{set addr:street='${addr:street|subst:([Сс]/[Тт])~>} (СТ)'}
+addr:street ~ '.*([Кк]оттеджный [Пп]оселок).*' 
+	{set addr:street='${addr:street|subst:([Кк]оттеджный [Пп]оселок)~>} (КП)'}
+addr:street ~ '.*([Кк]оттеджный [Пп]осёлок).*' 
+	{set addr:street='${addr:street|subst:([Кк]оттеджный [Пп]осёлок)~>} (КП)'}
+addr:street ~ '.*([Кк][Пп] ).*' 
+	{set addr:street='${addr:street|subst:([Кк][Пп] )~>} (КП)'}
+addr:street ~ '.*([Сс][Дд][Тт] ).*' 
+	{set addr:street='${addr:street|subst:([Сс][Дд][Тт])~>} (СДТ)'}
+addr:street ~ '.*([Дд][Сс][Кк] ).*' 
+	{set addr:street='${addr:street|subst:([Дд][Сс][Кк])~>} (ДСК)'}
+addr:street ~ '(^[Сс][Тт] ).*' 
+	{set addr:street='${addr:street|subst:(^[Сс][Тт] )~>} (СТ)'}
+addr:street ~ '(^[Дд][Пп] ).*' 
+	{set addr:street='${addr:street|subst:(^[Дд][Пп] )~>} (ДП)'}
+addr:street ~ '.*([Сс][Оо][Тт] ).*' 
+	{set addr:street='${addr:street|subst:([Сс][Оо][Тт] )~>} (СОТ)'}
+
+addr:place ~ '.*([Сс][Нн][Тт] ).*' 
+	{set addr:place='${addr:place|subst:([Сс][Нн][Тт])~>} (СНТ)'}
+addr:place ~ '.*([Дд][Нн][Тт] ).*' 
+	{set addr:place='${addr:place|subst:([Дд][Нн][Тт])~>} (ДНТ)'}
+addr:place ~ '.*([Дд][Нн][Пп] ).*' 
+	{set addr:place='${addr:place|subst:([Дд][Нн][Пп])~>} (ДНП)'}
+addr:place ~ '.*([Сс]адовое [Тт]оварищество).*' 
+	{set addr:place='${addr:place|subst:([Сс]адовое [Тт]оварищество)~>} (СТ)'}
+addr:place ~ '.*([Сс]адоводческое [Тт]оварищество).*' 
+	{set addr:place='${addr:place|subst:([Сс]адоводческое [Тт]оварищество)~>} (СТ)'}
+addr:place ~ '.*([Сс]адовое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set addr:place='${addr:place|subst:([Сс]адовое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+addr:place ~ '.*([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество).*' 
+	{set addr:place='${addr:place|subst:([Сс]адоводческое [Нн]екоммерческое [Тт]оварищество)~>} (СНТ)'}
+addr:place ~ '.*([Сс]/[Тт]).*' 
+	{set addr:place='${addr:place|subst:([Сс]/[Тт])~>} (СТ)'}
+addr:place ~ '.*([Кк]оттеджный [Пп]оселок).*' 
+	{set addr:place='${addr:place|subst:([Кк]оттеджный [Пп]оселок)~>} (КП)'}
+addr:place ~ '.*([Кк]оттеджный [Пп]осёлок).*' 
+	{set addr:place='${addr:place|subst:([Кк]оттеджный [Пп]осёлок)~>} (КП)'}
+addr:place ~ '.*([Кк][Пп].*) ' 
+	{set addr:place='${addr:place|subst:([Кк][Пп] )~>} (КП)'}
+addr:place ~ '.*([Сс][Дд][Тт] ).*' 
+	{set addr:place='${addr:place|subst:([Сс][Дд][Тт])~>} (СДТ)'}
+addr:place ~ '.*([Дд][Сс][Кк] ).*' 
+	{set addr:place='${addr:place|subst:([Дд][Сс][Кк])~>} (ДСК)'}
+addr:place ~ '(^[Сс][Тт] ).*' 
+	{set addr:place='${addr:place|subst:(^[Сс][Тт] )~>} (СТ)'}
+addr:place ~ '(^[Дд][Пп] ).*' 
+	{set addr:place='${addr:place|subst:(^[Дд][Пп] )~>} (ДП)'}
+addr:place ~ '.*([Сс][Оо][Тт] ).*' 
+	{set addr:place='${addr:place|subst:([Сс][Оо][Тт] )~>} (СОТ)'}
+
+# удаляем пробел в начале названия
+name ~ '(^\s).*' {set name='${name|subst:(^\s)~>}'}
+###
+

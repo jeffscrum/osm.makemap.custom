@@ -1,0 +1,9 @@
+cpan -i Math::Polygon::Tree
+cpan -i Tree::R
+cpan -i Geo::Openstreetmap::Parser
+cpan -i PerlIO::via::PrepareCP1251
+cpan -i Log::Any 
+cpan -i Log::Any::Adapter
+cpan -i Log::Any module
+cpan -i Log::Any
+cpan -i Log::Any::Adapter

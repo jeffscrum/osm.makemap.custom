@@ -1,0 +1,20 @@
+#
+#
+#
+
+# удаляем
+
+bridge=no | bridge=false | bridge='0' {delete bridge;}
+bridge=abandoned  {delete highway; delete railway;}
+building=no | building='0' {delete building;}
+highway=no  | highway=abandoned | highway=piste {delete highway;}
+railway=no {delete railway;}
+
+highway=services |  highway=rest_area {set area:highway=service; delete highway;}
+highway=construction | highway=yes {set highway=path;}
+highway=ford {set slow_track=yes; delete highway;}
+
+# исправляем 
+
+bridge=true | bridge=1 {set bridge=yes}
+building=true | building=1 {set building=yes}

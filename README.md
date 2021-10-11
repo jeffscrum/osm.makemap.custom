@@ -18,35 +18,34 @@ Check what you downloaded and install:
 ```
 OSM
  ├── bin
- │   ├── step1_info.sh
- │   ├── step2_check.sh
- │   ├── step3_cut_poly.sh
- │   ├── step4_split.sh
- │   ├── step5_create_img_maptourist.sh
- │   └── step5_create_img_velo100.sh
- ├── bounds
+ |    ├── contours_osm2pbf.sh
+ |    ├── contours_srtm2contours.sh
+ |    ├── create_gmapi_w_contours.sh
+ |    ├── create_img_contoures.sh
+ |    ├── create_img_maptourist.sh
+ |    ├── create_img_velo100.sh
+ |    ├── cut_poly_from_source.sh
+ |    └── split.sh
+ ├── bounds/
  ├── cities5000.txt
- ├── garmin
- │   ├── custom
- │   └── federal
- ├── last_tested_version
- ├── map
- ├── pbf
- ├── planet.osm.pbf
- ├── poly
- ├── sea
- ├── source.osm.pbf -> planet.osm.pbf
+ ├── osm/
+ ├── pbf/
+ ├── poly/
+ ├── sea/
+ ├── source.osm.pbf -> ukraine-latest.osm.pbf
  ├── styles
- │   ├── maptourist
- │   ├── maptourist.typ
- │   ├── stranger
- │   └── stranger.typ
- ├── tiles
- ├── tmp
+ │   ├── contours/
+ |   ├── contours.txt
+ │   ├── maptourist/
+ |   ├── maptourist.txt
+ │   ├── velo100/
+ |   └── velo100.typ
+ ├── tiles/
+ ├── tmp/
  └── tools
-     ├── getbound
-     ├── mkgmap
-     ├── osmconvert
-     ├── splitter
-     └── srtm2osm
+     ├── mkgmap/
+     ├── osmconvert/
+     ├── osmosis/
+     ├── splitter/
+     └── srtm2osm/
 ```

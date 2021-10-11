@@ -1,0 +1,228 @@
+####
+#### English specific names
+####
+
+### fuel
+### diesel=yes
+amenity=fuel & fuel:diesel=yes & fuel:lpg=yes 
+{ name	'${name} (Diesel, LPG)' |
+ 	'${operator} (Diesel, LPG)' | 
+ 	'${brand} (Diesel, LPG)' | 
+ 	'${ref} (Diesel, LPG)' | 
+	'Diesel, LPG'}
+
+amenity=fuel & fuel:diesel=yes 
+{ name 	'${name} (Diesel)' | 
+	'${operator} (Diesel)' | 
+	'${brand} (Diesel)' | 
+	'${ref} (Diesel)' | 
+	'Diesel'}
+
+amenity=fuel & fuel:lpg=yes 
+{ name 	'${name} (LPG)' | 
+	'${operator} (LPG)' | 
+	'${brand} (LPG)' | 
+	'${ref} (LPG)' | 
+	'LPG'}
+
+amenity=fuel 
+{ name	'${name}' |
+ 	'${operator}' | 
+	'${brand}' |
+	'${ref}'}
+
+amenity=fuel & fuel:HGV_diesel=yes 
+{ name 	'${name} (Diesel)' | 
+	'${operator} (Diesel)' | 
+	'${brand} (Diesel)' | 
+	'${ref} (Diesel)' | 
+	'Diesel'}
+
+### diesel=no
+amenity=fuel & fuel:diesel=no & fuel:lpg=yes 
+{ name	'${name} (No Diesel, LPG)' |
+ 	'${operator} (No Diesel, LPG)' | 
+ 	'${brand} (No Diesel, LPG)' | 
+ 	'${ref} (No Diesel, LPG)' | 
+	'No Diesel, LPG'}
+
+amenity=fuel & fuel:diesel=no 
+{ name 	'${name} (No Diesel)' | 
+	'${operator} (No Diesel)' | 
+	'${brand} (No Diesel)' | 
+	'${ref} (No Diesel)' | 
+	'No Diesel'}
+###
+
+# Unnamed gas stations
+amenity=fuel  & name!=* {set name='fuel'}
+waterway=fuel & name!=* {set name='fuel'}
+
+#Toll Parkings
+(amenity=parking | parking=surface) & fee=yes {name '${name} (toll)' | 'toll'}
+
+# Delete wrong water naming in russian
+natural=water & (name='Водоем' | name='Водоём' | name='водоем' | name='водоём') {delete name}
+
+# Default names
+amenity=theatre & name!=* {set name='Theatre'}
+amenity=bench & name!=* {set name='Bench'}
+amenity=embassy & country!=* & name!=* {set name='Embassy'}
+(amenity=emergency_phone | amenity=telephone) & name!=* {set name='Telephone'}
+amenity=toilets & name!=* {set name='Toilets'}
+highway=services & mkgmap:area2poi!=true & name!=* {set name='Services'}
+historic=tomb & name!=* {set name='Tomb'}
+(highway=traffic_signals | crossing=traffic_signals) & name!=* {set name='Traffic Light'}
+(highway=ford | ford=yes) & name!=* {set name='Ford'}
+railway=level_crossing & name!=* {set name='Rail Crossing'}
+(amenity=car_rental | amenity=car_sharing | shop=car_rental) & name!=* {set name='Car Rental'}
+((shop=car & service=*) | shop=car_repair | shop=tires | shop=tyres | car_repair=tyres)  & name!=* {set name='Car Repair'}
+leisure=slipway & name!=* {set name='Slipway'}
+(leisure=marina | amenity=ferry_terminal) & name!=* {set name='Marina'}
+landuse=railway & name!=* {set name='Railway Area'}
+waterway=dock & name!=* {set name='Dock'}
+man_made=cairn & name!=* {set name='Cairn'}
+natural=stone & name!=* {set name='Stone'}
+man_made=breakwater & name!=* {set name='Breakwater'}
+barrier=log & name!=* {set name='Log'}
+(amenity=drinking_water | man_made=water_well) & name!=* {set name='drinking water'}
+natural=spring & name!=* {set name='Spring'}
+natural=hot_spring & name!=* {set name='Hot Spring'}
+amenity=pharmacy & name!=* {set name='Pharmacy'}
+(highway=rest_area & amenity!=toilets) & name!=* {set name='Rest Area'}
+amenity=taxi & name!=* {set name='Taxi'}
+amenity=police & name!=* {set name='Police'}
+(amenity=recycling | amenity=waste_disposal) & name!=* {set name='recycling'}
+(historic=wreck | seamark:type=wreck) & name!=* {set name='wreck'}
+amenity=dentist & name!=* {set name='dentist'}
+tourism=hostel {name '${name} (hostel)' | 'Hostel' }
+tourism=hostel & name!=* {set name='Hostel'}
+tourism=wilderness_hut & name!=* {set name='Wilderness Hut'}
+tourism=alpine_hut & name!=* {set name='Alpine Hut'}
+tourism=information & name!=* {set name='Information'}
+tourism=viewpoint & name!=* {set name='Viewpoint'}
+tourism=chalet & name!=* {set name='Chalet'}
+tourism=guest_house & name!=* {set name='Guest House'}
+(tourism=resort | leisure=resort) & name!=* {set name='Resort'}
+tourism=hotel & name!=* {set name='Hotel'}
+tourism=motel & name!=* {set name='Motel'}
+tourism=aquarium & name!=* {set name='Aquarium'}
+(tourism=zoo | amenity=zoo) & name!=* {set name='Zoo'}
+(tourism=museum | tourism=gallery | (tourism=attraction & historic=*) | historic=museum) & name!=* {set name='Museum'}
+(tourism=attraction | tourism=artwork | historic=archaeological_site) & name!=* {set name='Landmark'}
+(tourism=camp_site | tourism=caravan_site | tourism=camp_pitch | leisure=summer_camp) & name!=* {set name='Camp Site'}
+((tourism=picnic_site | leisure=picnic_table) & shelter!=yes) & name!=* {set name='Picnic Site'}
+(amenity=shelter | tourism=lean_to | (tourism=picnic_site & shelter=yes)) & name!=* {set name='Shelter'}
+historic=memorial & name!=* {set name='Memorial'}
+historic=monument & name!=* {set name='Monument'}
+natural=volcano & name!=* {set name='Volcano'}
+traffic_sign=city_limit & name!=* {set name='City Limit'}
+highway=stop & name!=* {set name='Stop'}
+highway=give_way & name!=* {set name='Yield'}
+(barrier=lift_gate | barrier=toll_booth | barrier=swing_gate) & name!=* {set name='Lift Gate'}
+(barrier=gate | barrier=sliding_gate | barrier=kissing_gate) & name!=* {set name='Gateway'}
+bridge=yes & name!=* {set name='Bridge'}
+(man_made=water_tower | building=water_tower) & name!=* {set name='Water Tower'}
+building=kiosk & name!=* {set name='Kiosk'}
+# building=* & addr:street!=* & addr:housenumber!=* & addr:unit!=* & mkgmap:area2poi!=true & name!=* {set name='Building'}
+amenity=grave_yard & name!=* {set name='Cemetery'}
+cemetery=grave & name!=* {set name='Tomb'}
+military=bunker & name!=* {set name='Bunker'}
+landuse=quarry & name!=* {set name='Quarry'}
+man_made=mine & name!=* {set name='Mine'}
+man_made=tower & name!=* {set name='Tower'}
+man_made=mast & name!=* {set name='Mast'}
+leisure=firepit & name!=* {set name='Firepit'}
+(power=generator & generator:source=wind) & name!=* {set name='Wind Power'}
+man_made=windmill & name!=* {set name='Windmill'}
+(natural=waterfall | waterway=waterfall | waterway=weir) & name!=* {set name='Waterfall'}
+(natural=geyser & amenity!=fountain) & name!=* {set name='Geyser'}
+(waterway=rapid | waterway=rapids | whitewater=rapid | whitewater=rapids) & name!=* {set name='Rapid'}
+whitewater=egress & name!=* {set name='Egress'}
+whitewater=put_in & name!=* {set name='Put In'}
+whitewater='put_in;egress' & name!=* {set name='Put In/Egress'}
+whitewater=hazard & name!=* {set name='Hazard'}
+(natural=cave_entrance | man_made=adit) & name!=* {set name='Cave'}
+(leisure=beach_resort | natural=beach & surface!=stone) & name!=* {set name='Beach'}
+natural=cliff & name!=* {set name='Cliff'}
+(barrier=bollard | barrier=bus_trap | barrier=block | barrier=cycle_barrier | barrier=stile | barrier=log) & name!=* {set name='Barrier'}
+(natural=rock | landmark=large_rock) & name!=* {set name='Rock'}
+(natural=peak | natural=hill | landmark=rock_pinnacle) & name!=* {set name='Peak'}
+natural=reef & name!=* {set name='Reef'}
+railway=subway_entrance & name!=* {set name='Subway Entrance'}
+(historic=boundary_stone | historic=milestone) & name!=* {set name='Boundary Stone'}
+amenity=fountain & name!=* {set name='Fountain'}
+traffic_calming=* & name!=* {set name='Bump'}
+(man_made=chimney | landmark=chimney) & name!=* {set name='Chimney'}
+((railway=station & !(layer<0)) | (public_transport=platform & rail=yes) | railway=halt | (public_transport=stop_position & train=yes)) & name!=* {set name='Railroad Station'}
+historic=fort & name!=* {set name='Fort'}
+historic=castle & name!=* {set name='Castle'}
+historic=ruins & name!=* {set name='Ruins'}
+amenity=place_of_worship & religion=christian	  & name!=* {set name='Christian'}
+amenity=place_of_worship & religion=buddhist	  & name!=* {set name='Buddhist'}
+amenity=place_of_worship & religion=hindu	  & name!=* {set name='Hindu'}
+amenity=place_of_worship & religion=jewish	  & name!=* {set name='Jewish'}
+amenity=place_of_worship & religion=muslim	  & name!=* {set name='Muslim'}
+amenity=place_of_worship & religion=shinto	  & name!=* {set name='Shinto'}
+amenity=place_of_worship & religion=sikh	  & name!=* {set name='Sikh'}
+amenity=place_of_worship & religion=taoist	  & name!=* {set name='Taoist'}
+amenity=place_of_worship & religion=scientologist & name!=* {set name='Scientologist'}
+amenity=place_of_worship & religion=zoroastrian	  & name!=* {set name='Zoroastrian'}
+amenity=place_of_worship & religion!=*		  & name!=* {set name='Church'}
+amenity=restaurant & cuisine=american			 & name!=* {set name='American'}
+amenity=restaurant & cuisine=asian			 & name!=* {set name='Asian'}
+amenity=restaurant & cuisine=bagel			 & name!=* {set name='Bagel'}
+amenity=restaurant & cuisine=barbecue			 & name!=* {set name='Barbecue/Grill'}
+amenity=restaurant & cuisine=british			 & name!=* {set name='British'}
+amenity=restaurant & cuisine='cafe/diner'		 & name!=* {set name='Cafe/Diner'}
+amenity=restaurant & fast_food=cafeteria		 & name!=* {set name='Cafeteria'}
+amenity=restaurant & cuisine=chinese			 & name!=* {set name='Chinese'}
+amenity=restaurant & cuisine=deli			 & name!=* {set name='Deli'}
+amenity=restaurant & cuisine=french			 & name!=* {set name='French'}
+amenity=restaurant & (cuisine=german | cuisine=bavarian) & name!=* {set name='German'}
+amenity=restaurant & cuisine=grill			 & name!=* {set name='Grill'}
+amenity=restaurant & cuisine=international		 & name!=* {set name='International'}
+amenity=restaurant & cuisine=italian			 & name!=* {set name='Italian'}
+amenity=restaurant & cuisine=japanese			 & name!=* {set name='Japanese'}
+amenity=restaurant & cuisine=korean			 & name!=* {set name='Korean'}
+amenity=restaurant & cuisine=mexican			 & name!=* {set name='Mexican'}
+amenity=restaurant & cuisine ~ '.*pizza.*'		 & name!=* {set name='Pizza'}
+amenity=restaurant & cuisine=sea_food			 & name!=* {set name='Sea Food'}
+amenity=restaurant & cuisine=spanish			 & name!=* {set name='Spanish'}
+amenity=restaurant & cuisine=speciality			 & name!=* {set name='Speciality'}
+amenity=restaurant & cuisine=steak			 & name!=* {set name='Steak'}
+amenity=restaurant & cuisine=thai			 & name!=* {set name='Thai'}
+amenity=restaurant & cuisine=*				 & name!=* {set name='dining'}
+amenity=restaurant & cuisine!=*				 & name!=* {set name='Restaurant'}
+amenity=fast_food					& name!=* {set name='Fast Food'}
+amenity=food_court					& name!=* {set name='Food Court'}
+amenity=cafe						& name!=* {set name='Cafe'}
+shop=alcohol				& name!=* {set name='Liquor'}
+shop=outdoor				& name!=* {set name='Sporting/Outdoor'}
+shop=optician				& name!=* {set name='Optician'}
+shop=chemist				& name!=* {set name='Chemist'}
+shop=clothes				& name!=* {set name='Clothes'}
+(shop=computer | shop=electronics)	& name!=* {set name='Electronics'}
+shop=convenience			& name!=* {set name='Convenience'}
+shop=department_store			& name!=* {set name='Department Store'}
+shop=doityourself			& name!=* {set name='DIY'}
+shop=fashion				& name!=* {set name='Fashion'}
+shop=furniture				& name!=* {set name='Furniture'}
+shop=garden_centre			& name!=* {set name='Garden Centre'}
+shop=garden_center			& name!=* {set name='Garden_Center'}
+shop=houseware				& name!=* {set name='Houseware'}
+shop=general				& name!=* {set name='General'}
+shop=hardware				& name!=* {set name='Hardware'}
+shop=hairdresser			& name!=* {set name='Hairdresser'}
+shop=mall				& name!=* {set name='Mall'}
+shop=organic				& name!=* {set name='Organic'}
+shop=shoes				& name!=* {set name='Shoes'}
+shop=supermarket			& name!=* {set name='Supermarket'}
+shop=kiosk 				& name!=* {set name='Kiosk'}
+shop=bakery				& name!=* {set name='Bakery'}
+shop=beauty				& name!=* {set name='Beauty'}
+shop=bicycle				& name!=* {set name='Bicycles'}
+shop=motorcycle				& name!=* {set name='Motorcycles'}
+shop=boat				& name!=* {set name='Boats'}
+shop=butcher				& name!=* {set name='Butcher'}
+shop=* & shop!=no & shop!=none		& name!=* {set name='Shop'}

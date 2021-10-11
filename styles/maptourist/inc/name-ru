@@ -1,0 +1,317 @@
+####
+#### Названия и переводы для русского языка
+####
+
+# Перевод тега sport
+sport ~ '.*(american_football).*' {set sport='регби'}
+sport ~ '.*(rugby_union).*' {set sport='регби'}
+sport ~ '.*(rugby_league).*' {set sport='регби'}
+sport ~ '.*(athletics).*' {set sport='атлетика'}
+sport ~ '.*(archery).*' {set sport='стрельба из лука'}
+sport ~ '.*(badminton).*' {set sport='бадминтон'}
+sport ~ '.*(baseball).*' {set sport='бейсбол'}
+sport ~ '.*(basketball).*' {set sport='баскетбол'}
+sport ~ '.*(beachvolleyball).*' {set sport='пляжный волейбол'}
+sport ~ '.*(boxing).*' {set sport='бокс'}
+sport ~ '.*(chess).*' {set sport='шахматы'}
+sport ~ '.*(climbing).*' {set sport='альпинизм'}
+sport ~ '.*(cricket).*' {set sport='крикет'}
+sport ~ '.*(croquet).*' {set sport='крокет'}
+sport ~ '.*(cycling).*' {set sport='велоспорт'}
+sport ~ '.*(equestrian).*' {set sport='верховая езда'}
+sport ~ '.*(fencing).*' {set sport='фехтование'}
+sport ~ '.*(football).*' {set sport='футбол'}
+sport ~ '.*(free_flying).*' {set sport='дельтаплан'}
+sport ~ '.*(golf).*' {set sport='гольф'}
+sport ~ '.*(gymnastics).*' {set sport='гимнастика'}
+sport ~ '.*(hockey).*' {set sport='хоккей'}
+sport ~ '.*(horse_racing).*' {set sport='лошадиные скачки'}
+sport ~ '.*(judo).*' {set sport='дзюдо'}
+sport ~ '.*(karting).*' {set sport='картинг'}
+sport ~ '.*(kitesurfing).*' {set sport='кайтсёрфинг'}
+sport ~ '.*(motor).*' {set sport='автомотоспорт'}
+sport ~ '.*(motocross).*' {set sport='мотокросс'}
+sport ~ '.*(obstacle_course).*' {set sport='полоса препятствий'}
+sport ~ '.*(paddle_tennis).*' {set sport='настольный теннис'}
+sport ~ '.*(paragliding).*' {set sport='парапланеризм'}
+sport ~ '.*(rowing).*' {set sport='академическая гребля'}
+sport ~ '.*(running).*' {set sport='бег'}
+sport ~ '.*(scuba_diving).*' {set sport='дайвинг'}
+sport ~ '.*(shooting).*' {set sport='стрельба'}
+sport ~ '.*(skateboard).*' {set sport='скейтборд'}
+sport ~ '.*(skating).*' {set sport='каток'}
+sport ~ '.*(ice_skating).*' {set sport='каток'}
+sport ~ '.*(skiing).*' {set sport='лыжи'}
+sport ~ '.*(ski).*' {set sport='лыжи'}
+sport ~ '.*(soccer).*' {set sport='футбол'}
+sport ~ '.*(streetball).*' {set sport='стритбол'}
+sport ~ '.*(surfing).*' {set sport='сёрфинг'}
+sport ~ '.*(swimming).*' {set sport='плавание'}
+sport ~ '.*(table_tennis).*' {set sport='настольный теннис'}
+sport ~ '.*(taekwondo).*' {set sport='тхэквондо'}
+sport ~ '.*(tennis).*' {set sport='теннис'}
+sport ~ '.*(volleyball).*' {set sport='волейбол'}
+sport ~ '.*(weightlifting).*' {set sport='тяжёлая атлетика'}
+sport ~ '.*(wrestling).*' {set sport='борьба'}
+sport ~ '.*(multi).*' {set sport='универсальная спортплощадка'}
+
+### fuel
+### diesel=yes
+amenity=fuel & fuel:diesel=yes & fuel:lpg=yes 
+{ name	'${name} (дизель, АГНС)' |
+ 	'${operator} (дизель, АГНС)' | 
+ 	'${brand} (дизель, АГНС)' | 
+ 	'${ref} (дизель, АГНС)' | 
+	'дизель, АГНС'}
+
+amenity=fuel & fuel:diesel=yes 
+{ name 	'${name} (дизель)' | 
+	'${operator} (дизель)' | 
+	'${brand} (дизель)' | 
+	'${ref} (дизель)' | 
+	'дизель'}
+
+amenity=fuel & fuel:lpg=yes 
+{ name 	'${name} (АГНС)' | 
+	'${operator} (АГНС)' | 
+	'${brand} (АГНС)' | 
+	'${ref} (АГНС)' | 
+	'АГНС'}
+
+amenity=fuel 
+{ name	'${name}' |
+ 	'${operator}' | 
+	'${brand}' |
+	'${ref}'}
+
+amenity=fuel & fuel:HGV_diesel=yes 
+{ name 	'${name} (дизель)' | 
+	'${operator} (дизель)' | 
+	'${brand} (дизель)' | 
+	'${ref} (дизель)' | 
+	'дизель'}
+
+### diesel=no
+amenity=fuel & fuel:diesel=no & fuel:lpg=yes 
+{ name	'${name} (нет дизеля, АГНС)' |
+ 	'${operator} (нет дизеля, АГНС)' | 
+ 	'${brand} (нет дизеля, АГНС)' | 
+ 	'${ref} (нет дизеля, АГНС)' | 
+	'нет дизеля, АГНС'}
+
+amenity=fuel & fuel:diesel=no 
+{ name 	'${name} (нет дизеля)' | 
+	'${operator} (нет дизеля)' | 
+	'${brand} (нет дизеля)' | 
+	'${ref} (нет дизеля)' | 
+	'нет дизеля'}
+
+###
+
+# названия безымянных заправок - АЗС
+amenity=fuel  & name!=* {set name='АЗС'}
+waterway=fuel & name!=* {set name='АЗС'}
+
+# Тип общественного транспорта в название остановки
+(public_transport=platform & railway!=platform | 
+	highway=bus_stop | 
+	amenity=bus_station) & trolleybus=yes & bus=yes
+		{ name '(А,Тб) ${name} ${ref}' |
+			'(А,Тб) ${name}' |
+			'(А,Тб) ${ref}' |
+			'автобус, троллейбус'}
+(public_transport=platform & railway!=platform | 
+	highway=bus_stop | 
+	amenity=bus_station) & trolleybus=yes 
+		{ name '(Тб) ${name} ${ref}' |
+			'(Тб) ${name}' |
+			'(Тб) ${ref}' |
+			'троллейбус'}
+public_transport=platform & railway!=platform | 
+	highway=bus_stop | 
+	amenity=bus_station
+		{ name '(A) ${name} ${ref}' |
+			'(A) ${name}' |
+			'(A) ${ref}' |
+			'автобус'}
+railway=tram_stop { name '(Тр) ${name} ${ref}' |
+			'(Тр) ${name}' |
+			'(Тр) ${ref}' |
+			'трамвай'}
+#public_transport=stop_position & trolleybus=yes
+#		{ name '(Тб) ${name} ${ref}' |
+#			'(Тб) ${name}' |
+#			'(Тб) ${ref}' |
+#			'троллейбус'}
+
+
+#платные парковки
+(amenity=parking | parking=surface) & fee=yes {name '${name} (платная)' | 'платная'}
+
+# Удаляем ошибочные надписи вместо имени
+natural=water & (name='Водоем' | name='Водоём' | name='водоем' | name='водоём') {delete name}
+
+# Названия по умолчанию
+amenity=theatre & name!=* {set name='театр'}
+amenity=bench & name!=* {set name='скамейка'}
+amenity=embassy & country!=* & name!=* {set name='посольство'}
+(amenity=emergency_phone | amenity=telephone) & name!=* {set name='телефон'}
+amenity=toilets & name!=* {set name='туалет'}
+highway=services & mkgmap:area2poi!=true & name!=* {set name='обслуживание'}
+shop=optician & name!=* {set name='оптика'}
+historic=tomb & name!=* {set name='гробница'}
+(highway=traffic_signals | crossing=traffic_signals) & name!=* {set name='светофор'}
+(highway=ford | ford=yes) & name!=* {set name='брод'}
+railway=level_crossing & name!=* {set name='ж/д переезд'}
+(amenity=car_rental | amenity=car_sharing | shop=car_rental) & name!=* {set name='аренда авто'}
+((shop=car & service=*) | shop=car_repair | shop=tires | shop=tyres | car_repair=tyres)  & name!=* {set name='автосервис'}
+leisure=slipway & name!=* {set name='лодочный спуск'}
+(leisure=marina | amenity=ferry_terminal) & name!=* {set name='пристань'}
+landuse=railway & name!=* {set name='ж/д территория'}
+waterway=dock & name!=* {set name='док'}
+man_made=cairn & name!=* {set name='тур'}
+natural=stone & name!=* {set name='камень'}
+man_made=breakwater & name!=* {set name='волнорез'}
+barrier=log & name!=* {set name='бревно'}
+(amenity=drinking_water | man_made=water_well) & name!=* {set name='питьевая вода'}
+natural=spring & name!=* {set name='родник'}
+natural=hot_spring & name!=* {set name='горячий источник'}
+amenity=pharmacy & name!=* {set name='аптека'}
+shop=optician & name!=* {set name='оптика'}
+(highway=rest_area & amenity!=toilets) & name!=* {set name='отдых'}
+amenity=taxi & name!=* {set name='такси'}
+amenity=police & name!=* {set name='полиция'}
+(amenity=recycling | amenity=waste_disposal) & name!=* {set name='помойка'}
+(historic=wreck | seamark:type=wreck) & name!=* {set name='остатки судна'}
+amenity=dentist & name!=* {set name='стоматология'}
+tourism=wilderness_hut & name!=* {set name='изба'}
+tourism=alpine_hut & name!=* {set name='горный приют'}
+tourism=information & name!=* {set name='информация'}
+tourism=viewpoint & name!=* {set name='вид'}
+tourism=chalet & name!=* {set name='шале'}
+tourism=guest_house & name!=* {set name='гостевой дом'}
+tourism=hostel {name '${name} (хостел)' | 'хостел' }
+tourism=hostel & name!=* {set name='хостел'}
+(tourism=resort | leisure=resort) & name!=* {set name='дом отдыха/санаторий'}
+tourism=hotel & name!=* {set name='гостиница'}
+tourism=motel & name!=* {set name='гостиница'}
+tourism=aquarium & name!=* {set name='аквариум'}
+(tourism=zoo | amenity=zoo) & name!=* {set name='зоопарк'}
+(tourism=museum | tourism=gallery | (tourism=attraction & historic=*) | historic=museum) & name!=* {set name='музей'}
+(tourism=attraction | tourism=artwork | historic=archaeological_site) & name!=* {set name='достопримечательность'}
+(tourism=camp_site | tourism=caravan_site | tourism=camp_pitch | leisure=summer_camp) & name!=* {set name='стоянка'}
+((tourism=picnic_site | leisure=picnic_table) & shelter!=yes) & name!=* {set name='пикник'}
+(amenity=shelter | tourism=lean_to | (tourism=picnic_site & shelter=yes)) & name!=* {set name='навес'}
+historic=memorial & name!=* {set name='мемориал'}
+historic=monument & name!=* {set name='памятник/монумент'}
+natural=volcano & name!=* {set name='вулкан'}
+traffic_sign=city_limit & name!=* {set name='ограничение скорости'}
+highway=stop & name!=* {set name='стоп'}
+highway=give_way & name!=* {set name='уступи'}
+(barrier=lift_gate | barrier=toll_booth | barrier=swing_gate) & name!=* {set name='шлагбаум'}
+(barrier=gate | barrier=sliding_gate | barrier=kissing_gate) & name!=* {set name='ворота'}
+bridge=yes & name!=* {set name='мост'}
+(man_made=water_tower | building=water_tower) & name!=* {set name='водонапорная башня'}
+building=kiosk & name!=* {set name='киоск'}
+# building=* & addr:street!=* & addr:housenumber!=* & addr:unit!=* & mkgmap:area2poi!=true & name!=* {set name='здание'}
+amenity=grave_yard & name!=* {set name='кладбище'}
+cemetery=grave & name!=* {set name='могила'}
+military=bunker & name!=* {set name='бункер'}
+landuse=quarry & name!=* {set name='карьер'}
+man_made=mine & name!=* {set name='шахта'}
+man_made=tower & name!=* {set name='башня'}
+man_made=mast & name!=* {set name='мачта'}
+leisure=firepit & name!=* {set name='кострище'}
+(power=generator & generator:source=wind) & name!=* {set name='ветряк'}
+man_made=windmill & name!=* {set name='мельница'}
+(natural=waterfall | waterway=waterfall | waterway=weir) & name!=* {set name='водопад'}
+(natural=geyser & amenity!=fountain) & name!=* {set name='гейзер'}
+(waterway=rapid | waterway=rapids | whitewater=rapid | whitewater=rapids) & name!=* {set name='порог'}
+whitewater=egress & name!=* {set name='выход'}
+whitewater=put_in & name!=* {set name='вход'}
+whitewater='put_in;egress' & name!=* {set name='вход/выход'}
+whitewater=hazard & name!=* {set name='опасность'}
+(natural=cave_entrance | man_made=adit) & name!=* {set name='пещера'}
+(leisure=beach_resort | natural=beach & surface!=stone) & name!=* {set name='пляж'}
+natural=cliff & name!=* {set name='обрыв'}
+(barrier=bollard | barrier=bus_trap | barrier=block | barrier=cycle_barrier | barrier=stile | barrier=log) & name!=* {set name='преграда'}
+(natural=rock | landmark=large_rock) & name!=* {set name='скала'}
+(natural=peak | natural=hill | landmark=rock_pinnacle) & name!=* {set name='вершина'}
+natural=reef & name!=* {set name='риф'}
+railway=subway_entrance & name!=* {set name='вход в метро'}
+(historic=boundary_stone | historic=milestone) & name!=* {set name='пограничный камень'}
+amenity=fountain & name!=* {set name='фонтан'}
+traffic_calming=* & name!=* {set name='лежачий полицейский'}
+(man_made=chimney | landmark=chimney) & name!=* {set name='дымовая труба'}
+((railway=station & !(layer<0)) | (public_transport=platform & rail=yes) | railway=halt | (public_transport=stop_position & train=yes)) & name!=* {set name='ж/д станция'}
+historic=fort & name!=* {set name='форт'}
+historic=castle & name!=* {set name='замок'}
+historic=ruins & name!=* {set name='руины'}
+amenity=place_of_worship & religion=christian	  & name!=* {set name='христианство'}
+amenity=place_of_worship & religion=buddhist	  & name!=* {set name='буддизм'}
+amenity=place_of_worship & religion=hindu	  & name!=* {set name='индуизм'}
+amenity=place_of_worship & religion=jewish	  & name!=* {set name='иудаизм'}
+amenity=place_of_worship & religion=muslim	  & name!=* {set name='ислам'}
+amenity=place_of_worship & religion=shinto	  & name!=* {set name='синтоизм'}
+amenity=place_of_worship & religion=sikh	  & name!=* {set name='сикхизм'}
+amenity=place_of_worship & religion=taoist	  & name!=* {set name='даосизм'}
+amenity=place_of_worship & religion=scientologist & name!=* {set name='саентология'}
+amenity=place_of_worship & religion=zoroastrian	  & name!=* {set name='зороастризм'}
+amenity=place_of_worship & religion!=*		  & name!=* {set name='храм'}
+amenity=restaurant & cuisine=american			 & name!=* {set name='американская'}
+amenity=restaurant & cuisine=asian			 & name!=* {set name='азиатская'}
+amenity=restaurant & cuisine=bagel			 & name!=* {set name='бублики'}
+amenity=restaurant & cuisine=barbecue			 & name!=* {set name='шашлык'}
+amenity=restaurant & cuisine=british			 & name!=* {set name='британская'}
+amenity=restaurant & cuisine='cafe/diner'		 & name!=* {set name='столовая'}
+amenity=restaurant & fast_food=cafeteria		 & name!=* {set name='столовая'}
+amenity=restaurant & cuisine=chinese			 & name!=* {set name='китайская'}
+amenity=restaurant & cuisine=deli			 & name!=* {set name='дели'}
+amenity=restaurant & cuisine=french			 & name!=* {set name='французская'}
+amenity=restaurant & (cuisine=german | cuisine=bavarian) & name!=* {set name='германская'}
+amenity=restaurant & cuisine=grill			 & name!=* {set name='гриль'}
+amenity=restaurant & cuisine=international		 & name!=* {set name='международная'}
+amenity=restaurant & cuisine=italian			 & name!=* {set name='итальянская'}
+amenity=restaurant & cuisine=japanese			 & name!=* {set name='японская'}
+amenity=restaurant & cuisine=korean			 & name!=* {set name='корейская'}
+amenity=restaurant & cuisine=mexican			 & name!=* {set name='мексиканская'}
+amenity=restaurant & cuisine ~ '.*pizza.*'		 & name!=* {set name='пицца'}
+amenity=restaurant & cuisine=sea_food			 & name!=* {set name='морепродукты'}
+amenity=restaurant & cuisine=spanish			 & name!=* {set name='испанская'}
+amenity=restaurant & cuisine=speciality			 & name!=* {set name='особая'}
+amenity=restaurant & cuisine=steak			 & name!=* {set name='стейки'}
+amenity=restaurant & cuisine=thai			 & name!=* {set name='тайская'}
+amenity=restaurant & cuisine=*				 & name!=* {set name='ресторан'}
+amenity=restaurant & cuisine!=*				 & name!=* {set name='ресторан'}
+amenity=fast_food					& name!=* {set name='быстрое питание'}
+amenity=food_court					& name!=* {set name='столовая'}
+amenity=cafe						& name!=* {set name='кафе'}
+shop=alcohol				& name!=* {set name='алкоголь'}
+shop=outdoor				& name!=* {set name='спорт/туризм'}
+shop=optician				& name!=* {set name='оптика'}
+shop=chemist				& name!=* {set name='хозяйственный'}
+shop=clothes				& name!=* {set name='одежда'}
+(shop=computer | shop=electronics)	& name!=* {set name='электроника'}
+shop=convenience			& name!=* {set name='магазин'}
+shop=department_store			& name!=* {set name='универмаг'}
+shop=doityourself			& name!=* {set name='хозяйственный'}
+shop=fashion				& name!=* {set name='бутик'}
+shop=furniture				& name!=* {set name='мебель'}
+shop=garden_centre			& name!=* {set name='садовый центр'}
+shop=garden_center			& name!=* {set name='садовый центр'}
+shop=houseware				& name!=* {set name='хозяйственный'}
+shop=general				& name!=* {set name='магазин'}
+shop=hardware				& name!=* {set name='инструменты'}
+shop=hairdresser			& name!=* {set name='парикмахерская'}
+shop=mall				& name!=* {set name='троговый центр'}
+shop=organic				& name!=* {set name='овощной'}
+shop=shoes				& name!=* {set name='обувь'}
+shop=supermarket			& name!=* {set name='супермаркет'}
+shop=kiosk 				& name!=* {set name='киоск'}
+shop=bakery				& name!=* {set name='булочная'}
+shop=beauty				& name!=* {set name='салон красоты'}
+shop=bicycle				& name!=* {set name='велосипеды'}
+shop=motorcycle				& name!=* {set name='мотоциклы'}
+shop=boat				& name!=* {set name='лодки'}
+shop=butcher				& name!=* {set name='мясо'}
+shop=* & shop!=no & shop!=none		& name!=* {set name='магазин'}
