@@ -1,4 +1,4 @@
 mkgmap: 4806
 splitter: 642
-osmconvert: 0.8.11 (64 bit)
-openjdk: 1.8.0_292
+osmconvert: 0.8.10
+openjdk: openjdk 13.0.7
