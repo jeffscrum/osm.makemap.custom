@@ -55,7 +55,7 @@ mono $TOOLSDIR/srtm2osm/Srtm2Osm.exe \
     -cat 1000 100 \
     -large \
     -corrxy 0.0005 0.0005 \
-    -o /root/OSM/osm/contours.osm \
-    > /root/OSM/tmp/srtm2osm_`date +%H%M%S`.log
+    -o $BASEDIR/osm/contours.osm \
+    > $BASEDIR/tmp/srtm2osm_`date +%H%M%S`.log
 
 
